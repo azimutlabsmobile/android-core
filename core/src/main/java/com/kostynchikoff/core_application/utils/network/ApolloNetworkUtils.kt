@@ -70,7 +70,7 @@ fun <T : Any> handleApolloException(e: ApolloException): ResultApi<T> {
             else -> ResultApi.HttpError("Ошибка сервера", e.code())
         }
 
-        is ApolloNetworkException -> ResultApi.HttpError("Проверте подключение к интернету",
+        is ApolloNetworkException -> ResultApi.HttpError("Проверьте подключение к интернету",
             HttpURLConnection.HTTP_GATEWAY_TIMEOUT
         )
         is ApolloSuccessException -> ResultApi.HttpError(e.message.orEmpty())
