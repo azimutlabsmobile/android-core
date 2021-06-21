@@ -22,7 +22,7 @@ open class PaginatedAdapter : SearchMultiTypeAdapter() {
             field = currentItems
             notifyDataSetChanged()
             mListener?.onCurrentPage(currentPage)
-            if (actualSize(value) >= pageSize)
+            if (actualSize(value) == pageSize)
                 isLoadNewItem = true
             else {
                 mListener?.onFinish()
