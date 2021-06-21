@@ -15,7 +15,7 @@ apply from: './date_dependesies.gradle'
 
 ext {
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.1"
+    libraryVersion = "1.0.2"
 }
 
 android {
