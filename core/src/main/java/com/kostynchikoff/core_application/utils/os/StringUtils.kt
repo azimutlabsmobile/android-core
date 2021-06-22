@@ -11,7 +11,7 @@ import java.util.*
 /**
  * Формирование из строки в числовое значение с двумя нулями
  */
-fun formatWithZeroAmount(value: String?, currency: String = EMPTY): String {
+fun formatWithZeroAmount(value: String?, currency: String = CoreConstant.EMPTY): String {
     val instance = NumberFormat.getNumberInstance(Locale.ENGLISH)
     val formatter = instance as? DecimalFormat
     if (value?.length ?: 0 <= 3) {
@@ -24,12 +24,16 @@ fun formatWithZeroAmount(value: String?, currency: String = EMPTY): String {
         value = value?.replace(",", ".")
         value = value?.replace("[^-0-9.]".toRegex(), "")
         formatter?.format(value?.toDouble())?.toString()?.replace(",", " ").orEmpty()
+        if (value?.first().toString() == (".")) {
+            value = "0$value"
+        }
+        value
     } catch (ex: Exception) {
         "0.00"
     }
-
     return "$result $currency"
 }
+
 
 /**
  * Добавление пробелов между элементами строки

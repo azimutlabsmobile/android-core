@@ -34,6 +34,7 @@ class StringUtilsKtTest {
         assertEquals(formatWithZeroAmount("1.00", "KZT"),"1.00 KZT")
         assertEquals(formatWithZeroAmount("1,0", "KZT"),"1.00 KZT")
         assertEquals(formatWithZeroAmount("109666556", "KZT"),"109 666 556.00 KZT")
+        assertEquals(formatWithZeroAmount(",001", "KZT"),"0.01 KZT")
     }
 
 
