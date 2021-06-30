@@ -30,7 +30,6 @@ class ContactService(private val application: Application) {
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
         ) ?: return emptyList()
 
-        var lastPhoneName: String? = " "
         if (phones.count > 0) {
             while (phones.moveToNext()) {
                 val name: String =
@@ -42,16 +41,15 @@ class ContactService(private val application: Application) {
                 val photoUri =
                     phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))
                         .orEmpty()
-                if (!name.equals(lastPhoneName, ignoreCase = true)) {
-                    lastPhoneName = name
-                    contactList.add(
-                        ContactsPhoneBook(
-                            name = name,
-                            phoneNumber = phoneNumber,
-                            avatar = photoUri
-                        )
+
+                contactList.add(
+                    ContactsPhoneBook(
+                        name = name,
+                        phoneNumber = phoneNumber,
+                        avatar = photoUri
                     )
-                }
+                )
+
             }
         }
         phones.close()
