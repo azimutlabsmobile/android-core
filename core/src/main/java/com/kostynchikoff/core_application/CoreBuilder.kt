@@ -16,6 +16,7 @@ import com.kostynchikoff.core_application.data.constants.CoreVariables.REFRESH_T
 import com.kostynchikoff.core_application.data.constants.CoreVariables.REST_INTERCEPTORS
 import com.kostynchikoff.core_application.data.constants.CoreVariables.REST_NETWORK_INTERCEPTORS
 import com.kostynchikoff.core_application.data.constants.CoreVariables.URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS
+import com.kostynchikoff.core_application.data.constants.CoreVariables.WEB_URL
 import okhttp3.Interceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -41,6 +42,14 @@ class CoreBuilder(private val application: Application) {
      */
     fun baseImageUrl(block: () -> String) {
         IMAGE_URL = block()
+    }
+
+    /**
+     * url по вебу
+     * @param {String.()} строка с url по веб версии аппки
+     */
+    fun webUrl(block: () -> String) {
+        WEB_URL = block()
     }
 
     /**

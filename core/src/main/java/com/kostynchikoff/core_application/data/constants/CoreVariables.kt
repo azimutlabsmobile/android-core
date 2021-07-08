@@ -22,6 +22,11 @@ object CoreVariables {
     var IMAGE_URL = ""
 
     /**
+     * url по веб версии аппки
+     */
+    var WEB_URL = ""
+
+    /**
      * url для graphQL
      */
     var BASE_APOLLO_URL = ""
