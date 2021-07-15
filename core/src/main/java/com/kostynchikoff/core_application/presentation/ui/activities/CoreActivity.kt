@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kostynchikoff.KDispatcher.IKDispatcher
 import com.kostynchikoff.core_application.data.constants.CoreConstant
+import com.kostynchikoff.core_application.data.constants.CoreVariables.ACTIVITIES_SCREEN_ORIENTATION
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
@@ -79,6 +80,12 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
     override fun onCreate(savedInstanceState: Bundle?) {
         initTheme(window, Theme.DARK)
         initTransition(this)
+        /*
+        * Если задан то задаем ориентацию для всех активити
+        */
+        ACTIVITIES_SCREEN_ORIENTATION?.let {
+            requestedOrientation = it
+        }
         super.onCreate(savedInstanceState)
     }
 

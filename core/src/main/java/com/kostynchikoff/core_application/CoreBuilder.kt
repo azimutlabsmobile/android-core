@@ -2,6 +2,7 @@ package com.kostynchikoff.core_application
 
 import android.app.Activity
 import android.app.Application
+import com.kostynchikoff.core_application.data.constants.CoreVariables.ACTIVITIES_SCREEN_ORIENTATION
 import com.kostynchikoff.core_application.data.constants.CoreVariables.APOLLO_CACHE_ENABLED
 import com.kostynchikoff.core_application.data.constants.CoreVariables.APOLLO_INTERCEPTORS
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_APOLLO_URL
@@ -154,6 +155,13 @@ class CoreBuilder(private val application: Application) {
      */
     fun restInterceptors(block: () -> List<Interceptor>) {
         REST_INTERCEPTORS = block()
+    }
+
+    /**
+     * Передаем ориентация всех активити
+     */
+    fun allActivitiesOrientation(block: () -> Int) {
+        ACTIVITIES_SCREEN_ORIENTATION = block()
     }
 
     fun build() {

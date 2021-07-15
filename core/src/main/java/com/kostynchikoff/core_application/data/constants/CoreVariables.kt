@@ -92,4 +92,9 @@ object CoreVariables {
      * Список дополнительных network интерцепторов для qraph QL
      */
     var NETWORK_APOLLO_INTERCEPTORS: List<Interceptor>? = null
+
+    /**
+     * Ориентация всех активити
+     */
+    var ACTIVITIES_SCREEN_ORIENTATION: Int? = null
 }
