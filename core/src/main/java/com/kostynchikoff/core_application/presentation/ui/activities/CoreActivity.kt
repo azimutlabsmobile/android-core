@@ -1,5 +1,6 @@
 package com.kostynchikoff.core_application.presentation.ui.activities
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kostynchikoff.KDispatcher.IKDispatcher
@@ -82,9 +83,12 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
         initTransition(this)
         /*
         * Если задан то задаем ориентацию для всех активити
+        * https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
         */
         ACTIVITIES_SCREEN_ORIENTATION?.let {
-            requestedOrientation = it
+            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+                requestedOrientation = it
+            }
         }
         super.onCreate(savedInstanceState)
     }
