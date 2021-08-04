@@ -10,36 +10,15 @@ import com.kostynchikoff.core_application.R
 /**
  * ViewPager c возможность устанавлявать высоту wrap_content
  */
-class MatchParentViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
+class MatchParentViewPager(context: Context, attrs: AttributeSet?) : ControlSwipeViewPager(context, attrs) {
 
     var childHeights: MutableList<Int> = ArrayList(childCount)
     var minHeight = 0
     var currentPos = 0
 
-    var swipeEnable: Boolean
-        get() = true
-
     init {
         setOnPageChangeListener()
         obtainMinHeightAttribute(context, attrs)
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.MatchParentViewPager, 0, 0)
-        try {
-            swipeEnable = ta.getBoolean(R.styleable.MatchParentViewPager_mpvp_swipeEnable, true)
-        } finally {
-            ta.recycle()
-        }
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (swipeEnable) {
-            super.onTouchEvent(event)
-        } else false
-    }
-
-    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        return if (swipeEnable) {
-            super.onInterceptTouchEvent(event)
-        } else false
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

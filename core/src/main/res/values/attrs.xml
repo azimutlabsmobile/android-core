@@ -61,10 +61,6 @@
         <attr name="swipeEnable" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="MatchParentViewPager">
-        <attr name="mpvp_swipeEnable" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="MarginTabLayout">
         <attr name="tabMarginStart" format="dimension" />
         <attr name="tabMarginTop" format="dimension" />

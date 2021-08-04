@@ -12,8 +12,7 @@ import com.kostynchikoff.core_application.R
 open class ControlSwipeViewPager(context: Context, attrs: AttributeSet?) :
     ViewPager(context, attrs) {
 
-    var swipeEnable: Boolean
-        get() = true
+    var swipeEnable = true
 
     init {
         val ta =
@@ -24,7 +23,6 @@ open class ControlSwipeViewPager(context: Context, attrs: AttributeSet?) :
             ta.recycle()
         }
     }
-
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return if (swipeEnable) {
