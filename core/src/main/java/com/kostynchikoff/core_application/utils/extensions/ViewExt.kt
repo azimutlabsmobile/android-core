@@ -401,6 +401,31 @@ fun ImageView.loadImageWitCacheAndListener(
 }
 
 /**
+ * Load image with cache and success/fail listeners
+ */
+fun ImageView.loadImageCenterCropWitCacheAndListener(
+    url: Any,
+    readyBlock: (Drawable?) -> Unit,
+    failBlock: (Boolean) -> Unit
+) {
+    val isSvg = getExtension(url.toString()) == SVG_FILE
+    val request = if (isSvg) {
+        Glide.with(this.context).`as`(Drawable::class.java)
+            .transition(withCrossFade())
+            .listener(SvgSoftwareLayerSetter(readyBlock, failBlock))
+            .load(Uri.parse(url.toString()))
+            .centerCrop()
+    } else {
+        Glide.with(this.context)
+            .load(url)
+            .centerCrop()
+            .listener(ImgSoftwareLayer(readyBlock, failBlock))
+
+    }
+    request.diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(this)
+}
+
+/**
  * Делаем view неактивной
  * @param isViewEnabled true view активная false неактивная
  */
