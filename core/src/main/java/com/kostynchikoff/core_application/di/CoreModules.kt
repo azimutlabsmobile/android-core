@@ -122,7 +122,7 @@ val coreUseCaseModule = module {
 
 val coreViewModel = module {
     viewModel {
-        CoreAuthViewModel(get())
+        CoreAuthViewModel(get(), get())
     }
 }
 
