@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
+import com.kostynchikoff.core_application.domein.auth.useCase.CoreIsPendingAuthorizationPassedUseCase
 import com.kostynchikoff.core_application.utils.extensions.showModuleActivity
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -32,7 +33,7 @@ class AuthActivityNavigator(
         var vieId: Int? = -1
     }
 
-    private val authToken by inject<SecurityDataSource>()
+    private val isPendingAuthorizationPassedUseCase by inject<CoreIsPendingAuthorizationPassedUseCase>()
 
     override fun navigate(
         destination: Destination,
@@ -56,7 +57,7 @@ class AuthActivityNavigator(
          */
         val viewId = authDestination?.getViewId() ?: -1
         val activity = context as? Activity
-        if (authToken.getAccessToken().isNullOrEmpty() && isAuthActivity) {
+        if (!isPendingAuthorizationPassedUseCase.execute() && isAuthActivity) {
             activity?.showModuleActivity(pathAuthActivity)
             addPendingData(destination, args, navOptions, navigatorExtras, viewId)
             return null

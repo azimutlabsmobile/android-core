@@ -15,6 +15,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.data.constants.CoreConstant.ARG_AUTH_IS_FROM_IGNORE_FLOW_BLOCKING
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
+import com.kostynchikoff.core_application.domein.auth.useCase.CoreIsPendingAuthorizationPassedUseCase
 import com.kostynchikoff.core_application.utils.extensions.showModuleActivity
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -39,7 +40,7 @@ class AuthFragmentNavigator(
         var vieId: Int? = -1
     }
 
-    private val authToken by inject<SecurityDataSource>()
+    private val isPendingAuthorizationPassedUseCase by inject<CoreIsPendingAuthorizationPassedUseCase>()
 
     override fun navigate(
         destination: Destination,
@@ -68,7 +69,7 @@ class AuthFragmentNavigator(
          * Если AccessToken пустой, тогда останавливаем переход на другой фрагмент, и записываем данные
          * в статичные переменные, для того чтобы перейти после авторизации
          */
-        if (authToken.getAccessToken().isNullOrEmpty() && isAuthFragment) {
+        if (!isPendingAuthorizationPassedUseCase.execute() && isAuthFragment) {
             val authActivityArgs = bundleOf(
                 ARG_AUTH_IS_FROM_IGNORE_FLOW_BLOCKING to isFlowBlockingException
             )
