@@ -91,7 +91,6 @@ abstract class CoreFragment(
        }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -168,6 +167,11 @@ abstract class CoreFragment(
 
     open fun redirectLogin() = activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)
 
+    /*
+    * Проверка авторизован ли ожидающий подтверждения авторизации пользователь
+    */
+    open fun isPendingAuthorizationPassed(): Boolean = viewModel.isPendingAuthorizationPassed
+
     /**
      * При успешной авторизации пересоздаем состоние
      */
@@ -188,4 +192,5 @@ abstract class CoreFragment(
             unsubscribe(KDispatcherEventConstant.SUCCESS_AUTH_CORE_EVENT)
         }
     }
+
 }
