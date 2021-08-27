@@ -98,7 +98,7 @@ class CoreRemoveUserAvatarUseCase(private val repos: CoreAuthUserDateRepository)
  */
 class CoreIsPendingAuthorizationPassedUseCase(private val repos: CoreAuthUserDateRepository) {
 
-    fun execute() = repos.isPendingAuthorizationPassed()
+    fun execute() = repos.getAccessToken().isNotEmpty() && repos.isPendingAuthorizationPassed()
 
 }
 
