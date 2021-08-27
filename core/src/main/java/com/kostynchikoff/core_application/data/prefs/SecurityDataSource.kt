@@ -19,6 +19,12 @@ import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_USER_
  */
 class SecurityDataSource(private val pref: SharedPreferences) {
 
+    /*
+    * При каждом создании приложения по умолчанию isAuthPendingUser = false,
+    * так как изначально все пользователи не авторизованы и ждут подтверждения
+    */
+    var isAuthPendingUserAuthorized = false
+
     /**
      * Делаем logout пользователя
      */

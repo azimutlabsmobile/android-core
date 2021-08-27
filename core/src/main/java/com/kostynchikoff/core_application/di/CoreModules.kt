@@ -76,6 +76,12 @@ val coreRepositoryModule = module {
     factory {
         CoreAuthUserDateRepository(get())
     }
+}
+
+val coreUseCaseModule = module {
+    factory {
+        CoreCheckAuthUserUseCase(get())
+    }
     factory {
         CoreGetPhoneNumberUseCase(get())
     }
@@ -100,13 +106,18 @@ val coreRepositoryModule = module {
     factory {
         CoreSetUserAvatarUseCase(get())
     }
-}
-
-val coreUseCaseModule = module {
     factory {
-        CoreCheckAuthUserUseCase(get())
+        CoreRemoveUserAvatarUseCase(get())
     }
-
+    factory {
+        CoreIsPendingAuthorizationPassedUseCase(get())
+    }
+    factory {
+        CoreSetPendingAuthorizationPassedUseCase(get())
+    }
+    factory {
+        CoreResetPendingAuthorizationPassedUseCase(get())
+    }
 }
 
 val coreViewModel = module {

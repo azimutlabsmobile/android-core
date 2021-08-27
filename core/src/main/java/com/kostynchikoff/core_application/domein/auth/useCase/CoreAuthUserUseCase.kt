@@ -93,5 +93,29 @@ class CoreRemoveUserAvatarUseCase(private val repos: CoreAuthUserDateRepository)
     fun execute() = repos.removeUserAvatar()
 }
 
+/**
+ * Проверка авторизован ли ожидающий подтверждения авторизации пользователь
+ */
+class CoreIsPendingAuthorizationPassedUseCase(private val repos: CoreAuthUserDateRepository) {
 
+    fun execute() = repos.isPendingAuthorizationPassed()
 
+}
+
+/**
+ * Сохраняем стейт что пользователь ожидающий авторизации потвердился
+ */
+class CoreSetPendingAuthorizationPassedUseCase(private val repos: CoreAuthUserDateRepository) {
+
+    fun execute() = repos.setPendingAuthorizationPassed()
+
+}
+
+/**
+ * Сбрасываем стейт что пользователь ожидающий авторизации потвердился
+ */
+class CoreResetPendingAuthorizationPassedUseCase(private val repos: CoreAuthUserDateRepository) {
+
+    fun execute() = repos.resetPendingAuthorizationPassed()
+
+}

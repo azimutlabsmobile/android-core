@@ -77,4 +77,24 @@ open class CoreAuthUserDateRepository(private val secureDataSource: SecurityData
      * Удалить аватар пользователя
      */
     fun removeUserAvatar() = secureDataSource.removeUserAvatar()
+
+    /*
+   * Проверка авторизован ли ожидающий подтверждения авторизации пользователь
+   */
+    fun isPendingAuthorizationPassed() = secureDataSource.isAuthPendingUserAuthorized
+
+    /*
+    * Сохраняем стейт что пользователь ожидающий авторизации потвердился
+    */
+    fun setPendingAuthorizationPassed() {
+        secureDataSource.isAuthPendingUserAuthorized = true
+    }
+
+    /*
+    * Сбрасываем стейт что пользователь ожидающий авторизации потвердился
+    */
+    fun resetPendingAuthorizationPassed() {
+        secureDataSource.isAuthPendingUserAuthorized = false
+    }
+
 }

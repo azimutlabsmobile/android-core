@@ -97,7 +97,7 @@ abstract class CoreFragment(
 
         subscribeAuthCallBack(view, savedInstanceState)
 
-        if (viewModel.isAuthUser) {
+        if (viewModel.isPendingAuthorizationPassed) {
             onAuthorizedViewCreated(view, savedInstanceState)
         } else {
             onUnAuthorizedViewCreated(view, savedInstanceState)
