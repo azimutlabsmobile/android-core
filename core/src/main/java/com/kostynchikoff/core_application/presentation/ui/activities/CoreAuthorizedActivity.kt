@@ -32,10 +32,10 @@ abstract class CoreAuthorizedActivity(
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isAuthUser = viewModel.isAuthUser
+        isAuthUser = viewModel.isPendingAuthorizationPassed
         onStartTrack(this)
         super.onCreate(savedInstanceState)
-        if (viewModel.isAuthUser) {
+        if (viewModel.isPendingAuthorizationPassed) {
             onAuthorizedCreate(savedInstanceState)
         } else {
             onUnAuthorizedCreate(savedInstanceState)

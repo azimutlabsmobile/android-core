@@ -120,7 +120,7 @@ open class CoreBottomSheetFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (viewModel.isAuthUser) {
+        if (viewModel.isPendingAuthorizationPassed) {
             onAuthorizedViewCreated(view, savedInstanceState)
         }else{
             onUnAuthorizedViewCreated(view, savedInstanceState)
