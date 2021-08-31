@@ -24,6 +24,9 @@ import java.io.IOException
 import java.lang.StringBuilder
 import java.net.HttpURLConnection
 
+/*
+* ToDo: Delete
+*/
 class OAuthInterceptor : Interceptor, KoinComponent {
 
     private val pref by inject<SecurityDataSource>()

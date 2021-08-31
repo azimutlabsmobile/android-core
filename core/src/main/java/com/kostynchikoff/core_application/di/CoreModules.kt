@@ -147,7 +147,6 @@ fun createRetrofitOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(httpLoggingInterceptorLevel)
     val okHttpBuilder = OkHttpClient.Builder()
-        .addInterceptor(OAuthInterceptor())
         .connectTimeout(CoreConstant.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
         .readTimeout(CoreConstant.READ_TIMEOUT, TimeUnit.MILLISECONDS)
 
