@@ -24,9 +24,7 @@ import java.io.IOException
 import java.lang.StringBuilder
 import java.net.HttpURLConnection
 
-/*
-* ToDo: Delete
-*/
+@Deprecated("Впредь такого рода интерцепторы используем локально")
 class OAuthInterceptor : Interceptor, KoinComponent {
 
     private val pref by inject<SecurityDataSource>()
