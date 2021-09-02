@@ -12,7 +12,7 @@ import com.kostynchikoff.core_application.utils.delegates.EncryptedPrefDelegate
 import com.kostynchikoff.core_application.utils.delegates.EncryptedPrefDelegateImpl
 import com.kostynchikoff.core_application.utils.event.SingleLiveEvent
 import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 
 @Deprecated("Использовать [CoreLaunchViewModel]")
 abstract class CoreViewModel : ViewModel(), KoinComponent, IKDispatcher {

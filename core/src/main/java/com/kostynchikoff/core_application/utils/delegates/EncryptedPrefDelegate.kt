@@ -1,8 +1,8 @@
 package com.kostynchikoff.core_application.utils.delegates
 
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 interface EncryptedPrefDelegate {
     fun getPref() : SecurityDataSource

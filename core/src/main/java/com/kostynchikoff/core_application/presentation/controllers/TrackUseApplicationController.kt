@@ -5,8 +5,8 @@ import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
 import com.kostynchikoff.core_application.data.prefs.SourcesLocalDataSource
 import com.kostynchikoff.core_application.presentation.ui.activities.CoreActivity
 import com.kostynchikoff.core_application.presentation.ui.activities.CoreAuthorizedActivity
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.lang.ref.WeakReference
 
 /**

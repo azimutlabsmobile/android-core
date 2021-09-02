@@ -9,7 +9,7 @@ import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.data.constants.CoreConstant
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 
 
 class AuthNavHostFragment : NavHostFragment(), KoinComponent {

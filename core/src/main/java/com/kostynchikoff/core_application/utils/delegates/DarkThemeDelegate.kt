@@ -8,8 +8,8 @@ import com.kostynchikoff.core_application.data.constants.CoreConstant.MIN_VERSIO
 import com.kostynchikoff.core_application.data.constants.CoreVariables
 import com.kostynchikoff.core_application.data.prefs.SourcesLocalDataSource
 import com.kostynchikoff.core_application.utils.os.getOSVersion
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.lang.RuntimeException
 
 
