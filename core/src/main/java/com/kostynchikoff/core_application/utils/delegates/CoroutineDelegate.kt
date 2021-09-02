@@ -223,7 +223,7 @@ interface CoreCoroutine {
 class CoreCoroutineDelegate : CoreCoroutine, EncryptedPrefDelegate by EncryptedPrefDelegateImpl() {
 
     private val parentJob = Job()
-    override val scope = CoroutineScope(Dispatchers.Main + parentJob)
+    override val scope = CoroutineScope(Dispatchers.IO + parentJob)
 
 
     private val _statusEventLiveData = MutableLiveData<EventWrapper<Status>>()
