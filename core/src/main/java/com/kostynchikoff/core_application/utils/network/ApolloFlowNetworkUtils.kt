@@ -5,6 +5,7 @@ import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.api.Query
 import com.apollographql.apollo.api.cache.http.HttpCachePolicy
 import com.apollographql.apollo.coroutines.toDeferred
+import com.apollographql.apollo.fetcher.ApolloResponseFetchers
 import com.kostynchikoff.core_application.data.constants.CoreVariables.APOLLO_CACHE_ENABLED
 import com.kostynchikoff.core_application.utils.exeption.ApolloSuccessException
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +28,10 @@ suspend fun <A : Operation.Data, B : Any, C : Operation.Variables> ApolloClient.
     var queryCall = query(call.invoke())
 
     if (cachePolicy != null && APOLLO_CACHE_ENABLED) {
-        queryCall = queryCall.httpCachePolicy(cachePolicy)
+        queryCall = queryCall.toBuilder()
+            .httpCachePolicy(cachePolicy)
+            .responseFetcher(ApolloResponseFetchers.CACHE_AND_NETWORK)
+            .build()
     }
 
     val result = queryCall.toDeferred().await()
