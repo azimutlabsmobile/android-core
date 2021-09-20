@@ -21,9 +21,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 abstract class CoreAuthorizedActivity(
     lay: Int,
     isUseLocalSession: Boolean = true,
-    private val isGoToPendingFragment: Boolean = true
+    private val isGoToPendingFragment: Boolean = true,
+    private val isAuthCallBack: Boolean = false
 ) :
-    CoreActivity(lay),
+    CoreActivity(lay, isAuthCallBack),
     TrackUseApplication by TrackUseApplicationController(isUseLocalSession) {
 
     private val viewModel by viewModel<CoreAuthViewModel>()
