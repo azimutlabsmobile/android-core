@@ -128,12 +128,7 @@ fun <T : Any, V : Any> CoreViewModel.unwrapWithError(
             successBlock(result.data)
         }
         is ResultApi.HttpError<*> -> {
-            val error = try {
-                (result.error as? V) ?: return
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return
-            }
+            val error = (result.error as? V) ?: return
             errorBlock?.invoke(error)
 
             /**
