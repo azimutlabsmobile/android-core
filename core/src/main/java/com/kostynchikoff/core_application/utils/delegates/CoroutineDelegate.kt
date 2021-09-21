@@ -414,7 +414,12 @@ class CoreCoroutineDelegate : CoreCoroutine, EncryptedPrefDelegate by EncryptedP
                 successBlock(result.data)
             }
             is ResultApi.HttpError<*> -> {
-                val error = (result.error as? V) ?: return
+                val error = try {
+                    (result.error as? V) ?: return
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    return
+                }
 
 
                 when{
