@@ -152,7 +152,6 @@ abstract class CoreFragment(
     override fun onDestroyView() {
         super.onDestroyView()
         unsubscribeAuthCallBack()
-
     }
 
 

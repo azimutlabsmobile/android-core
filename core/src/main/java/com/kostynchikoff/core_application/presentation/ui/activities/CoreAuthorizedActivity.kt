@@ -21,9 +21,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 abstract class CoreAuthorizedActivity(
     lay: Int,
     isUseLocalSession: Boolean = true,
-    private val isGoToPendingFragment: Boolean = true
+    private val isGoToPendingFragment: Boolean = true,
+    private val isAuthCallBack: Boolean = false
 ) :
-    CoreActivity(lay),
+    CoreActivity(lay, isAuthCallBack),
     TrackUseApplication by TrackUseApplicationController(isUseLocalSession) {
 
     private val viewModel by viewModel<CoreAuthViewModel>()
@@ -32,28 +33,8 @@ abstract class CoreAuthorizedActivity(
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isAuthUser = viewModel.isPendingAuthorizationPassed
         onStartTrack(this)
         super.onCreate(savedInstanceState)
-        if (viewModel.isPendingAuthorizationPassed) {
-            onAuthorizedCreate(savedInstanceState)
-        } else {
-            onUnAuthorizedCreate(savedInstanceState)
-        }
-    }
-
-    /**
-     * Выволнения кода для авторизованных пользователей
-     */
-    open fun onAuthorizedCreate(savedInstanceState: Bundle?) {
-        // выполняться код для авторизованных пользователей
-    }
-
-    /**
-     * Выволнения кода для не авторизованных пользователей
-     */
-    open fun onUnAuthorizedCreate(savedInstanceState: Bundle?) {
-        // выполняться код для авторизованных пользователей
     }
 
     /**

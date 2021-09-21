@@ -2,24 +2,34 @@ package com.kostynchikoff.core_application.presentation.ui.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.kostynchikoff.KDispatcher.IKDispatcher
+import com.kostynchikoff.KDispatcher.KDispatcherEventConstant
+import com.kostynchikoff.KDispatcher.subscribe
+import com.kostynchikoff.KDispatcher.unsubscribe
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreVariables.ACTIVITIES_SCREEN_ORIENTATION
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
+import com.kostynchikoff.core_application.presentation.viewModel.CoreAuthViewModel
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.delegates.*
 import com.kostynchikoff.core_application.utils.extensions.toast
 import com.kostynchikoff.core_application.utils.wrappers.EventObserver
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.net.HttpURLConnection
 
 
-abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHandler,
+abstract class CoreActivity(
+    lay: Int,
+    private val isAuthCallBack: Boolean = false
+) : AppCompatActivity(lay), ResultLiveDataHandler,
     DarkTheme by DarkThemeDelegate(),
     TransitionAnimation by TransitionAnimationActivityDelegate(), PermissionHandler, IKDispatcher {
 
+    private val viewModel by viewModel<CoreAuthViewModel>()
 
     protected val errorMessageObserver = EventObserver<String> { toast(it) }
 
@@ -52,7 +62,26 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
         }
     }
 
+    /**
+     * Вызываеться после успешной авторизации
+     */
+    open fun onUpdateStateSuccessAuth() {
+        // do nothing
+    }
 
+    /**
+     * выполняться код для авторизованных пользователей
+     */
+    open fun onAuthorizedViewCreate(savedInstanceState: Bundle?) {
+        // do nothing
+    }
+
+    /**
+     * выполняться код для авторизованных пользователей
+     */
+    open fun onUnAuthorizedViewCreate(savedInstanceState: Bundle?) {
+        // do nothing
+    }
 
     open fun redirectLogin() {
         // реализовать в случае базовой функциональности
@@ -90,9 +119,22 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
                 requestedOrientation = it
             }
         }
+
+        subscribeAuthCallBack(savedInstanceState)
+
+        if (viewModel.isPendingAuthorizationPassed) {
+            onAuthorizedViewCreate(savedInstanceState)
+        } else {
+            onUnAuthorizedViewCreate(savedInstanceState)
+        }
+
         super.onCreate(savedInstanceState)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unsubscribeAuthCallBack()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -112,6 +154,27 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
                     return
                 }
             }
+        }
+    }
+
+    /**
+     * При успешной авторизации пересоздаем состоние
+     */
+    private fun subscribeAuthCallBack(savedInstanceState: Bundle?) {
+        if (isAuthCallBack) {
+            subscribe<Unit>(KDispatcherEventConstant.SUCCESS_AUTH_CORE_EVENT, 1) {
+                onAuthorizedViewCreate(savedInstanceState)
+                onUpdateStateSuccessAuth()
+            }
+        }
+    }
+
+    /**
+     * Удаляем callback успешной авторизации
+     */
+    private fun unsubscribeAuthCallBack() {
+        if (isAuthCallBack) {
+            unsubscribe(KDispatcherEventConstant.SUCCESS_AUTH_CORE_EVENT)
         }
     }
 
