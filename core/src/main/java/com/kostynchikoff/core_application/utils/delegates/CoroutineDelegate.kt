@@ -418,12 +418,12 @@ class CoreCoroutineDelegate : CoreCoroutine, EncryptedPrefDelegate by EncryptedP
                 val error = (result.error as? V) ?: return
 
                 try {
-                    when{
+                    when {
                         errorBlock != null -> errorBlock.invoke(error)
                         errorWithCodeBlock != null -> errorWithCodeBlock.invoke(result.code, error)
                     }
                 } catch (e: Exception) {
-                    if(BuildConfig.DEBUG) {
+                    if (BuildConfig.DEBUG) {
                         e.printStackTrace()
                     }
                 }
