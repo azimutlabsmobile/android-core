@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.kostynchikoff.core_application.BuildConfig
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.network.LoadingType
 import com.kostynchikoff.core_application.data.network.ResultApi
@@ -416,11 +417,17 @@ class CoreCoroutineDelegate : CoreCoroutine, EncryptedPrefDelegate by EncryptedP
             is ResultApi.HttpError<*> -> {
                 val error = (result.error as? V) ?: return
 
-
-                when{
-                    errorBlock != null -> errorBlock.invoke(error)
-                    errorWithCodeBlock != null -> errorWithCodeBlock.invoke(result.code, error)
+                try {
+                    when {
+                        errorBlock != null -> errorBlock.invoke(error)
+                        errorWithCodeBlock != null -> errorWithCodeBlock.invoke(result.code, error)
+                    }
+                } catch (e: Exception) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                 }
+
                 /**
                  * Если приходит код 401 и ты имеем токен
                  * отправляем в стутус редирект в экран логина или запрос нового токена
