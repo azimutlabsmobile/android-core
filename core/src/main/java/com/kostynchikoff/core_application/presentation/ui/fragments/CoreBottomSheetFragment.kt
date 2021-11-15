@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.kostynchikoff.KDispatcher.IKDispatcher
+import com.kostynchikoff.KDispatcher.KDispatcherEventConstant
+import com.kostynchikoff.KDispatcher.subscribe
+import com.kostynchikoff.KDispatcher.unsubscribe
 import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreVariables
@@ -21,9 +24,9 @@ import java.net.HttpURLConnection
 
 open class CoreBottomSheetFragment(
     private val lay: Int = -1,
-    style: Int = R.style.BottomSheetDialogTheme
-) :
-    RoundedBottomSheetDialogFragment(style), ResultLiveDataHandler,
+    style: Int = R.style.BottomSheetDialogTheme,
+    private val isAuthCallBack: Boolean = false
+) : RoundedBottomSheetDialogFragment(style), ResultLiveDataHandler,
     PermissionHandler, IKDispatcher {
 
     private val viewModel by viewModel<CoreAuthViewModel>()
@@ -81,10 +84,9 @@ open class CoreBottomSheetFragment(
         }
     }
 
-
-
-    private fun redirectLogin() =
+    open fun redirectLogin() =
         activity?.showActivityAndClearBackStack(CoreVariables.LOGIN_ACTIVITY)
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -120,12 +122,21 @@ open class CoreBottomSheetFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        subscribeAuthCallBack(view, savedInstanceState)
+
         if (viewModel.isPendingAuthorizationPassed) {
             onAuthorizedViewCreated(view, savedInstanceState)
         }else{
             onUnAuthorizedViewCreated(view, savedInstanceState)
         }
+    }
 
+    /**
+     * Вызываеться после успешной авторизации
+     */
+    open fun onUpdateStateSuccessAuth() {
+        // do nothing
     }
 
     /**
@@ -140,5 +151,26 @@ open class CoreBottomSheetFragment(
      */
     open fun onUnAuthorizedViewCreated(view: View, savedInstanceState: Bundle?) {
       // do nothing
+    }
+
+    /**
+     * При успешной авторизации пересоздаем состоние
+     */
+    private fun subscribeAuthCallBack(view: View, savedInstanceState: Bundle?) {
+        if (isAuthCallBack) {
+            subscribe<Unit>(KDispatcherEventConstant.SUCCESS_AUTH_CORE_EVENT, 1) {
+                onAuthorizedViewCreated(view, savedInstanceState)
+                onUpdateStateSuccessAuth()
+            }
+        }
+    }
+
+    /**
+     * Удаляем callback успешной авторизации
+     */
+    private fun unsubscribeAuthCallBack() {
+        if (isAuthCallBack) {
+            unsubscribe(KDispatcherEventConstant.SUCCESS_AUTH_CORE_EVENT)
+        }
     }
 }
